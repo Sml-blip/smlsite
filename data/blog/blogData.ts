@@ -1,11 +1,11 @@
 export const blogPosts = [
   {
-    title: "Top 5 Must-Have Gadgets for Students in 2024",
-    author: "John Doe (Tech Enthusiast)",
-    category: "Tech Trends",
+    title: "Top 5 des gadgets indispensables pour les étudiants en 2024",
+    author: "John Doe (Passionné de Tech)",
+    category: "Tendances Tech",
     image: "/images/products/senheiser-removebg-preview.png",
     excerpt:
-      "Struggling to keep up with the latest tech trends as a student? This blog post dives into the top 5 gadgets that can help you ace your studies, stay organized, and have some fun on the go!",
+      "Vous avez du mal à suivre les dernières tendances technologiques en tant qu'étudiant ? Ce blog plonge dans le top 5 des gadgets qui peuvent vous aider à réussir vos études, rester organisé et vous amuser !",
     content: [
       {
         type: "text",
@@ -45,12 +45,12 @@ export const blogPosts = [
     date: new Date(),
   },
   {
-    title: "The Ultimate Guide to Choosing the Perfect Gaming Laptop",
-    author: "Jane Smith (Gaming Expert)",
+    title: "Le guide ultime pour choisir le PC portable gamer parfait",
+    author: "Jane Smith (Expert Gaming)",
     category: "Gaming",
     image: "/images/products/asus-vivobook-removebg-preview.png",
     excerpt:
-      "Overwhelmed by the vast selection of gaming laptops? Fear not! This comprehensive guide will break down the key factors to consider when choosing the perfect machine for your gaming needs, ensuring smooth gameplay and an immersive experience.",
+      "Débordé par le vaste choix de PC portables gamers ? Pas de panique ! Ce guide complet détaille les facteurs clés à prendre en compte pour choisir la machine idéale pour vos besoins de jeu.",
     content: [
       {
         type: "text",
@@ -86,12 +86,12 @@ export const blogPosts = [
     date: new Date(),
   },
   {
-    title: "Smart Home Devices That Make Your Life Easier",
-    author: "David Lee (Tech Lifestyle Blogger)",
-    category: "Smart Home",
+    title: "Les appareils domestiques intelligents qui vous facilitent la vie",
+    author: "David Lee (Blogger Lifestyle Tech)",
+    category: "Maison Intelligente",
     image: "/images/products/galaxy-15-removebg-preview.png",
     excerpt:
-      "Take control of your home with the power of smart technology! This blog post explores a variety of smart home devices that can automate tasks, improve your security, and even boost your energy efficiency.",
+      "Prenez le contrôle de votre maison grâce à la technologie intelligente ! Ce blog explore une variété d'appareils domestiques intelligents qui peuvent automatiser les tâches, améliorer votre sécurité et même booster votre efficacité énergétique.",
     content: [
       {
         type: "text",

@@ -18,7 +18,7 @@ const FilterProductsBtn = () => {
     <Sheet>
       <SheetTrigger>
         <div className="text-lg flex items-center gap-2 bg-black rounded-md dark:bg-white py-2 px-6 dark:text-black text-white">
-          <Filter /> Filter
+          <Filter /> Filtrer
         </div>
       </SheetTrigger>
       <SheetContent className="overflow-y-scroll">

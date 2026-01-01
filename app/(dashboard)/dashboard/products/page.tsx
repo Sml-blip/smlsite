@@ -36,7 +36,7 @@ const ProductsPage = () => {
               <tr key={product.id} className="bg-white dark:bg-gray-800">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Image
-                    src={product.images[0]}
+                    src={product.images?.[0] || "/placeholder.png"}
                     alt={product.name}
                     width={40}
                     height={40}

@@ -25,10 +25,10 @@ const WishlistPage = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="mb-4">
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">
-            Wishlist
+            Liste de souhaits
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Your Saved Items Here
+            Vos articles sauvegardés
           </p>
         </div>
         {/* Wishlist Items */}
@@ -57,7 +57,7 @@ const WishlistPage = () => {
                   {cart.description.slice(0, 100)}
                 </p>
                 <div className="flex justify-between items-center">
-                  <p className="text-green-500 font-semibold text-lg">${formatPrice(cart.price)}</p>
+                  <p className="text-green-500 font-semibold text-lg">{formatPrice(cart.price)}</p>
                   <button
                     className="text-red-500 hover:text-red-600 focus:outline-none"
                     onClick={() => removeFromWishlist(cart.id)}

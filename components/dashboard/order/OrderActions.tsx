@@ -30,21 +30,21 @@ const OrderActions = () => {
             href={`/dashboard/orders/id`}
             className="py-2 px-4 rounded-md w-full  block hover:bg-slate-200 dark:hover:bg-slate-900"
           >
-            View Details
+            Voir les détails
           </Link>
           <Select>
             <SelectTrigger className="w-full text-base px-4 border-none outline-none focus:ring-offset-0 focus:ring-0 focus-within:outline-none hover:bg-slate-200 dark:hover:bg-slate-900">
-              <SelectValue placeholder="Change Status" />
+              <SelectValue placeholder="Changer le statut" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="on the way">On The Way</SelectItem>
-              <SelectItem value="delivered">Delivered</SelectItem>
-              <SelectItem value="shiped">Shiped</SelectItem>
+              <SelectItem value="pending">En attente</SelectItem>
+              <SelectItem value="on the way">En route</SelectItem>
+              <SelectItem value="delivered">Livré</SelectItem>
+              <SelectItem value="shipped">Expédié</SelectItem>
             </SelectContent>
           </Select>
           <button className="w-full text-start hover:bg-slate-200 dark:hover:bg-slate-900 py-2 px-4 rounded-md">
-            Cancel Order{" "}
+            Annuler la commande{" "}
           </button>
         </PopoverContent>
       </Popover>

@@ -88,7 +88,7 @@ const HeroBannerOne = () => {
                 >
                   <div className="absolute w-48 h-48 bg-yellow-400 rounded-full animate-blob1"></div>
                   <div className="absolute w-48 h-48 bg-red-400 rounded-full animate-blob2"></div>
-                  <div className="absolute w-48 h-48 bg-blue-400 rounded-full animate-blob3"></div>
+                  <div className="absolute w-48 h-48 bg-gray-400 rounded-full animate-blob3"></div>
                 </motion.div>
               </CarouselItem>
             ))}

@@ -13,40 +13,43 @@ const Footer = () => {
       <div className="max-w-screen-xl mx-auto p-4 md:p-8 flex md:flex-row  flex-wrap gap-4 md:gap-2 justify-between">
         <div className="flex flex-col space-y-4 mb-8 md:mb-0">
           <Logo />
-          <p>Your one-stop shop for all things electronics.</p>
+          <p>Votre boutique unique pour tout l'électronique.</p>
           <div className="flex space-x-4">
             <Link
-              href="www.facebook.com"
+              href="https://www.facebook.com"
+              target="_blank"
               className=""
             >
-              <FaFacebook size={30}/>
+              <FaFacebook size={30} />
             </Link>
             <Link
-              href="www.x.com"
+              href="https://www.x.com"
+              target="_blank"
               className=""
             >
-              <FaTwitter size={30}/>
+              <FaTwitter size={30} />
             </Link>
             <Link
-              href="www.instagram.com"
+              href="https://www.instagram.com"
+              target="_blank"
               className=""
             >
-              <FaInstagramSquare size={30}/>
+              <FaInstagramSquare size={30} />
             </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-4">
-          <h3 className="text-xl font-semibold">Categories</h3>
+          <h3 className="text-xl font-semibold">Catégories</h3>
           <ul className="space-y-2">
             {dummyCategories.map(category => (
               <li key={category.name}>
-              <Link
-                href={`/shop?category=${category.name}`}
-                className=""
-              >
-                {category.name}
-              </Link>
-            </li>
+                <Link
+                  href={`/shop?category=${category.name}`}
+                  className=""
+                >
+                  {category.name}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -58,7 +61,7 @@ const Footer = () => {
                 href="/"
                 className=""
               >
-                Home
+                Accueil
               </Link>
             </li>
             <li>
@@ -66,7 +69,7 @@ const Footer = () => {
                 href="/about"
                 className=""
               >
-                About Us
+                À propos
               </Link>
             </li>
             <li>
@@ -74,7 +77,7 @@ const Footer = () => {
                 href="/contact"
                 className=""
               >
-                Contact Us
+                Contactez-nous
               </Link>
             </li>
             <li>
@@ -82,7 +85,7 @@ const Footer = () => {
                 href="/shop"
                 className=""
               >
-                Shop
+                Boutique
               </Link>
             </li>
           </ul>
@@ -95,7 +98,7 @@ const Footer = () => {
                 href="/help"
                 className=""
               >
-                Help Center
+                Centre d'aide
               </Link>
             </li>
             <li>
@@ -103,7 +106,7 @@ const Footer = () => {
                 href="#"
                 className=""
               >
-                Returns & Refunds
+                Retours & Remboursements
               </Link>
             </li>
             <li>
@@ -111,7 +114,7 @@ const Footer = () => {
                 href="#"
                 className=""
               >
-                Terms of Service
+                Conditions d'utilisation
               </Link>
             </li>
             <li>
@@ -119,7 +122,7 @@ const Footer = () => {
                 href="#"
                 className=""
               >
-                Privacy Policy
+                Politique de confidentialité
               </Link>
             </li>
           </ul>
@@ -127,7 +130,7 @@ const Footer = () => {
       </div>
       <hr className="w-full h-[2px] bg-white" />
       <div className="text-center mt-8">
-        <p>&copy; 2024 Your Brand Name. All Rights Reserved.</p>
+        <p>&copy; 2024 SML INFORMATIQUE. Tous droits réservés.</p>
       </div>
     </footer>
   );

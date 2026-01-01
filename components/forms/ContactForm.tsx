@@ -9,9 +9,9 @@ import { Input } from '../ui/input';
 
 // Define Zod schema for form validation
 const schema = z.object({
-  name: z.string().min(3,'Name Is Required'),
-  email: z.string().email('Invalid email').min(10, 'Email is Required'),
-  message: z.string().min(5,'Message Is Required'),
+  name: z.string().min(3, 'Le nom est requis'),
+  email: z.string().email('Email invalide').min(10, 'L\'email est requis'),
+  message: z.string().min(5, 'Le message est requis'),
 });
 
 // Define types for form data
@@ -36,11 +36,11 @@ const ContactForm: React.FC = () => {
   return (
     <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
       <div className="px-6 py-8 md:px-10">
-        <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-6">Contact Us</h2>
+        <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-6">Contactez-nous</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-y-6">
             <div>
-              <Label htmlFor="name">Your Name</Label>
+              <Label htmlFor="name">Votre nom</Label>
               <Input
                 type="text"
                 id="name"
@@ -51,10 +51,10 @@ const ContactForm: React.FC = () => {
               {errors.name && <span className="text-red-500">{errors.name.message}</span>}
             </div>
             <div>
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Adresse e-mail</Label>
               <Input
                 type="email"
-  
+
                 id="email"
                 autoComplete="email"
                 className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md"
@@ -76,9 +76,9 @@ const ContactForm: React.FC = () => {
             <div className="mt-4 flex items-center justify-end">
               <Button
                 type="submit"
-                className="w-fit flex items-center justify-center py-4 px-6 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-base font-medium"
+                className="w-fit flex items-center justify-center py-4 px-6 border border-transparent rounded-md shadow-sm text-primary-foreground bg-primary hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 text-base font-medium"
               >
-                Send Message
+                Envoyer le message
               </Button>
             </div>
           </div>

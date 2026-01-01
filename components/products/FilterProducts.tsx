@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import { brandsData } from "@/data/brands/brandsdata";
 import { Label } from "../ui/label";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { colors } from "@/data/products/productColor";
-import { dummyCategories } from "@/data/category/categoryData";
+import { productsData } from "@/data/products/productsData";
+import { Product } from "@/types";
 
 const FilterProducts = () => {
   // State variables for filters
@@ -29,6 +29,22 @@ const FilterProducts = () => {
   const initialColor = searchParams.get("color");
   const initialBrand = searchParams.get("brand");
 
+  // Dynamically extract unique categories and brands from productsData
+  const { uniqueCategories, uniqueBrands } = useMemo(() => {
+    const categoriesSet = new Set<string>();
+    const brandsSet = new Set<string>();
+
+    productsData.forEach((product: Product) => {
+      if (product.category) categoriesSet.add(product.category);
+      if (product.brand) brandsSet.add(product.brand);
+    });
+
+    return {
+      uniqueCategories: Array.from(categoriesSet),
+      uniqueBrands: Array.from(brandsSet),
+    };
+  }, []);
+
   // Update state with initial values
   useEffect(() => {
     setMaxValue(Number(initialPrice));
@@ -46,6 +62,8 @@ const FilterProducts = () => {
       newSearchParams.set("category", category);
     }
     setSelectedCategory(category);
+    // When filtering by category, reset page to 1
+    newSearchParams.set("page", "1");
     router.push(`${pathname}?${newSearchParams}`);
   };
 
@@ -71,6 +89,7 @@ const FilterProducts = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("min", `${min}`);
     newSearchParams.set("max", `${max}`);
+    newSearchParams.set("page", "1");
     router.push(`${pathname}?${newSearchParams}`);
   };
 
@@ -82,6 +101,7 @@ const FilterProducts = () => {
       newSearchParams.set("color", color.split("-")[0]);
     }
     setSelectedColor(color);
+    newSearchParams.set("page", "1");
     router.push(`${pathname}?${newSearchParams}`);
   };
 
@@ -93,6 +113,7 @@ const FilterProducts = () => {
       newSearchParams.set("brand", brand);
     }
     setSelectedBrand(brand);
+    newSearchParams.set("page", "1");
     router.push(`${pathname}?${newSearchParams}`);
   };
 
@@ -102,17 +123,17 @@ const FilterProducts = () => {
 
   return (
     <aside className="w-72 p-2 space-y-4 ">
-      <h2 className="text-xl font-bold capitalize my-2">Filter Products</h2>
+      <h2 className="text-xl font-bold capitalize my-2">Filtrer les produits</h2>
       <Separator />
       {/* filter by price */}
       <div>
-        <h3 className="text-lg font-medium my-2">By Price</h3>
+        <h3 className="text-lg font-medium my-2">Par Prix</h3>
         <div className="flex items-center justify-between gap-4">
           <div>
-            <Label htmlFor="min">Min :</Label>
+            <Label htmlFor="min">Min (TND) :</Label>
             <Input
               id="min"
-              placeholder="$10"
+              placeholder="10 TND"
               value={minValue}
               min={2}
               type="number"
@@ -120,10 +141,10 @@ const FilterProducts = () => {
             />
           </div>
           <div>
-            <Label htmlFor="max">Max :</Label>
+            <Label htmlFor="max">Max (TND) :</Label>
             <Input
               id="max"
-              placeholder="$2000"
+              placeholder="2000 TND"
               min={2}
               value={maxValue}
               type="number"
@@ -139,48 +160,25 @@ const FilterProducts = () => {
             max={5000}
             value={maxValue}
           />
-          <p className="text-center text-green-500 text-2xl">${maxValue}</p>
+          <p className="text-center text-green-500 text-2xl">{maxValue} TND</p>
         </div>
       </div>
 
       {/* filter by category */}
       <div>
-        <h3 className="text-lg font-medium my-2">By Categories</h3>
+        <h3 className="text-lg font-medium my-2">Par Catégories</h3>
         <div className="flex items-center justify-start gap-2 flex-wrap">
-          {dummyCategories.map((category) => (
+          {uniqueCategories.map((category) => (
             <p
-              onClick={() => handleCategorySelection(category.name)}
+              onClick={() => handleCategorySelection(category)}
               className={cn(
                 "px-4 py-1 rounded-full bg-slate-200 dark:bg-slate-700 cursor-pointer",
-                category.name === selectedCategory &&
-                  "bg-blue-400 dark:bg-blue-700"
+                category === selectedCategory &&
+                "bg-primary text-black"
               )}
-              key={category.id}
+              key={category}
             >
-              {category.name}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      {/* filter by Colors */}
-      <div>
-        <h3 className="text-lg font-medium my-2">By Colors</h3>
-        <div className="flex items-center justify-start gap-2 flex-wrap">
-          {colors.map((color) => (
-            <p
-              onClick={() => handleColorSelection(color)}
-              className={cn(
-                "px-4 py-1 rounded-full bg-slate-200 dark:bg-slate-700  flex items-center justify-start gap-3 cursor-pointer",
-                color === selectedColor && "bg-blue-400 dark:bg-blue-700"
-              )}
-              key={color}
-            >
-              <span
-                className={`w-6 h-6 rounded-full border opacity-80`}
-                style={{ backgroundColor: color }}
-              />
-              {color.split("-")[0]}
+              {category}
             </p>
           ))}
         </div>
@@ -188,14 +186,14 @@ const FilterProducts = () => {
 
       {/* filter by Brand name */}
       <div>
-        <h3 className="text-lg font-medium my-2">By Brands</h3>
+        <h3 className="text-lg font-medium my-2">Par Marques</h3>
         <div className="flex items-center justify-start gap-2 flex-wrap">
-          {brandsData.map((brand) => (
+          {uniqueBrands.map((brand) => (
             <p
               onClick={() => handleBrandSelection(brand)}
               className={cn(
                 "px-4 py-1 rounded-full bg-slate-200 dark:bg-slate-700 cursor-pointer",
-                selectedBrand === brand && "bg-blue-400 dark:bg-blue-700"
+                selectedBrand === brand && "bg-primary text-black"
               )}
               key={brand}
             >
@@ -206,7 +204,7 @@ const FilterProducts = () => {
       </div>
       <div>
         <Button onClick={clearFilter} variant={"outline"} className="w-full">
-          Clear Filter
+          Effacer le filtre
         </Button>
       </div>
     </aside>

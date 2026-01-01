@@ -14,8 +14,8 @@ const ProductTab = ({ aboutItem = [], reviews = [] }: ProductTabsProps) => {
     <div>
       <Tabs defaultValue="aboutitem" className="w-full p-4 -mt-2 ">
         <TabsList className="bg-transparent">
-          <TabsTrigger value="aboutitem">About This Item</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews</TabsTrigger>
+          <TabsTrigger value="aboutitem">À propos de cet article</TabsTrigger>
+          <TabsTrigger value="reviews">Avis</TabsTrigger>
         </TabsList>
         <TabsContent value="aboutitem">
           <div>
@@ -28,7 +28,7 @@ const ProductTab = ({ aboutItem = [], reviews = [] }: ProductTabsProps) => {
         </TabsContent>
         <TabsContent value="reviews">
           {reviews?.length === 0 ? (
-            <div>No Review Found For This Product</div>
+            <div>Aucun avis trouvé pour ce produit</div>
           ) : (
             <div className="grid grid-cols-1 gap-2">
               {reviews.map((review, index) => (

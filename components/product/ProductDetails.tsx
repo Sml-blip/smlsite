@@ -40,10 +40,10 @@ const ProductDetails = ({ product }: { product: Product }) => {
       {/* product stock */}
       <div>
         {product.stockItems === 0 ? (
-          <p className="text-lg  w-fit rounded-md text-muted-foreground">out of stock</p>
+          <p className="text-lg  w-fit rounded-md text-muted-foreground">Rupture de stock</p>
         ) : (
           <p className="text-lg w-fit rounded-md text-muted-foreground">
-            Only <span className="text-lg text-black dark:text-white">({product.stockItems})</span> items in stock
+            Plus que <span className="text-lg text-black dark:text-white">({product.stockItems})</span> articles en stock
           </p>
         )}
       </div>
@@ -57,13 +57,15 @@ const ProductDetails = ({ product }: { product: Product }) => {
       <div className="flex items-center gap-6">
         <div className="">
           {/* Original Price */}
-          <p className="text-muted-foreground line-through text-2xl">
-            ${product?.price}
-          </p>
+          {product.discount > 0 && (
+            <p className="text-muted-foreground line-through text-2xl">
+              {product?.price} TND
+            </p>
+          )}
           <div className="flex items-center gap-4">
             {/* Discounted Price */}
             <p className="text-3xl font-bold text-green-500 border-green-500 border py-2 px-6 rounded-lg">
-              ${calculateDiscount(product.price, product.discount)}
+              {calculateDiscount(product.price, product.discount)} TND
             </p>
             <ProductQuantityChange
               quantity={quantity}

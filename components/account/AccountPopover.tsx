@@ -18,25 +18,25 @@ const AccountPopover = () => {
   const userLinks = [
     {
       link: "/my-account",
-      label: "My Account",
+      label: "Mon compte",
       icon: <User />,
       isActive: pathname.includes("/my-account"),
     },
     {
       link: "/wishlist",
-      label: "Wishlist",
+      label: "Favoris",
       icon: <Heart />,
       isActive: pathname.includes("/wishlist"),
     },
     {
       link: "/my-orders",
-      label: "My Orders",
+      label: "Mes commandes",
       icon: <ListOrdered />,
       isActive: pathname.includes("/my-orders"),
     },
     {
       link: "/help",
-      label: "Help",
+      label: "Aide",
       icon: <HelpCircle />,
       isActive: pathname.includes("/help"),
     },
@@ -46,7 +46,7 @@ const AccountPopover = () => {
     <div className="hidden lg:block">
       <Popover>
         <PopoverTrigger className="flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-800 duration-200 p-2 rounded-md">
-          <User size={25}  />
+          <User size={25} />
         </PopoverTrigger>
         <PopoverContent
           className=" rounded-2xl 
@@ -70,7 +70,7 @@ const AccountPopover = () => {
             <Separator className="!my-2" />
             <button className="flex items-start justify-start gap-2 p-2 bg-transparent hover:opacity-50">
               <LogOut />
-              Logout
+              Déconnexion
             </button>
           </ul>
         </PopoverContent>

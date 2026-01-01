@@ -6,7 +6,7 @@ import SearchBox from "./SearchBox";
 import Cart from "../carts/Cart";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import AccountPopover from "../account/AccountPopover";
-import {  Search } from "lucide-react";
+import { Search } from "lucide-react";
 import MobileHeader from "./MobileHeader";
 import { Separator } from "../ui/separator";
 import { usePathname } from "next/navigation";
@@ -20,12 +20,12 @@ const HeaderOne = () => {
 
   const links = [
     {
-      label: "Home",
+      label: "Accueil",
       link: "/",
       isActive: pathname === "/",
     },
     {
-      label: "Shop",
+      label: "Boutique",
       link: "/shop",
       isActive: pathname.startsWith("/shop"),
     }

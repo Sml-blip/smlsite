@@ -23,9 +23,9 @@ function HeroBannerTwo() {
               <div className="flex items-center justify-center md:justify-start">
                 <Link
                   href={`/shop`}
-                  className="bg-blue-500 hover:bg-blue-600 text-lg text-white py-4 px-10 rounded-full flex items-center gap-2"
+                  className="bg-primary hover:bg-yellow-500 text-lg text-primary-foreground py-4 px-10 rounded-full flex items-center gap-2"
                 >
-                  <ArrowRight /> Shop Now
+                  <ArrowRight /> Commander maintenant
                 </Link>
               </div>
             </div>
@@ -41,10 +41,10 @@ function HeroBannerTwo() {
         </div>
         {/* smaller banner */}
         <div
-          className="lg:col-span-1 bg-white text-black dark:bg-slate-900 dark:text-white p-4 
+          className="lg:col-span-1 bg-white text-black dark:bg-black dark:text-white p-4 
         rounded-md shadow-md space-y-2 py-6 text-center"
         >
-          <h2 className="text-3xl font-bold">Special Summer Sale</h2>
+          <h2 className="text-3xl font-bold">Soldes d'été</h2>
           <div className="relative w-full h-60">
             <Image
               src={"/images/products/senheiser-removebg-preview.png"}
@@ -54,13 +54,13 @@ function HeroBannerTwo() {
             />
           </div>
           <p className="my-4 text-lg font-medium">
-            Get up to <span className="text-rose-500 text-xl">( 50% off )</span>{" "}
-            on Headphones !
+            Obtenez jusqu'à <span className="text-rose-500 text-xl">( 50% de réduction )</span>{" "}
+            sur les écouteurs !
           </p>
           <Link
             href={"/shop?category=Headphones"}
-            className="py-3 px-8 block w-fit  whitespace-nowrap mx-auto rounded-full bg-blue-500 hover:bg-blue-600
-             text-white text-lg"
+            className="py-3 px-8 block w-fit  whitespace-nowrap mx-auto rounded-full bg-primary hover:bg-yellow-500
+             text-primary-foreground text-lg"
           >
             Explore Now
           </Link>

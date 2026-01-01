@@ -22,7 +22,7 @@ const TestimonialsSection = ({ textCenter }: { textCenter: boolean }) => {
               : "text-start border-l-4 border-l-rose-500"
           )}
         >
-          What Our Customers Say
+          Ce que disent nos clients
         </h2>
         <Carousel
           plugins={[

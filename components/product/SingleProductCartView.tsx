@@ -39,26 +39,30 @@ const SingleProductCartView = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/shop/${id}`}
-      className="relative border rounded-xl shadow-lg overflow-hidden group"
+      className="relative border rounded-xl shadow-lg overflow-hidden group flex flex-col h-full bg-white dark:bg-slate-900"
     >
       <div className={`w-full bg-gray-200 overflow-hidden`}>
         <div className="relative w-full h-[18rem] group-hover:scale-110 transition-all duration-300 rounded-md overflow-hidden">
-          <Image className="object-contain" src={images[0]} alt={name} fill />
+          <Image className="object-contain" src={images?.[0] || "/placeholder.png"} alt={name} fill />
           {stockItems === 0 ? (
             <p className="py-1 px-4 text-sm font-bold rounded-sm bg-rose-500 text-white absolute top-2 right-2">
-              out of stock
+              Rupture de stock
             </p>
           ) : (
-            <p className="py-1 px-4 text-sm font-bold rounded-sm bg-rose-500 text-white absolute top-2 right-2">
-              {product.discount}% off
-            </p>
+            <>
+              {discount > 0 && (
+                <p className="py-1 px-4 text-sm font-bold rounded-sm bg-rose-500 text-white absolute top-2 right-2">
+                  -{discount}%
+                </p>
+              )}
+            </>
           )}
         </div>
       </div>
       <div className="hidden group-hover:block slideCartOptions absolute top-16 right-2">
         <ProductOptions product={product} />
       </div>
-      <div className="my-2 space-y-1 p-4">
+      <div className="my-2 space-y-1 p-4 flex-1 flex flex-col">
         <p
           onClick={(e) => {
             e.preventDefault();
@@ -74,10 +78,12 @@ const SingleProductCartView = ({ product }: { product: Product }) => {
           {name.length > 45 && "..."}
         </h3>
         <RatingReview rating={rating} review={reviews.length} />
-        <div className="text-lg font-bold space-x-3 ">
-          <span className="line-through text-muted-foreground">${price}</span>
+        <div className="text-lg font-bold space-x-3 mt-auto">
+          {discount > 0 && (
+            <span className="line-through text-muted-foreground">{price} TND</span>
+          )}
           <span className="text-xl font-bold text-green-500">
-            ${discountedPrice.toFixed(2)}
+            {discountedPrice.toFixed(2)} TND
           </span>
         </div>
       </div>

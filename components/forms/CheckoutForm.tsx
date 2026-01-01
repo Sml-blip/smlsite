@@ -1,27 +1,33 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import useCartStore from "@/store/cartStore";
+import useOrderStore from "@/store/orderStore";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { showToast } from "@/lib/showToast";
 
-// Defined Zod schema for form validation
+// Simplified Zod schema for form validation
 const schema = z.object({
-  firstName: z.string().min(3, "First Name is required"),
-  lastName: z.string().min(3, "Last Name is required"),
-  address: z.string().min(5, "Address is required"),
-  phone: z.string().min(8, "Phone is required"),
-  city: z.string().min(3, "City is required"),
-  zip: z.string().min(5, "ZIP Code is required"),
-  country: z.string().min(2, "Country is required"),
+  name: z.string().min(3, "Le nom est requis"),
+  phone: z.string().min(8, "Le téléphone est requis (ex: 22334455)"),
+  address: z.string().min(3, "L'adresse est requise"),
 });
 
 // Defined types for form data
 type FormData = z.infer<typeof schema>;
 
 const CheckoutForm: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { cartItems, getTotalAmount, clearCart } = useCartStore();
+  const { addOrder } = useOrderStore();
+  const router = useRouter();
+
   // Initialize React Hook Form
   const {
     register,
@@ -32,41 +38,102 @@ const CheckoutForm: React.FC = () => {
   });
 
   // Handle form submission
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setIsLoading(true);
+
+    const newOrder = {
+      id: Math.random().toString(36).substring(7),
+      orderNumber: `ORD-${Math.floor(Math.random() * 1000000)}`,
+      customerName: data.name,
+      email: "sml.shop.2024@gmail.com",
+      address: data.address,
+      city: "",
+      zip: "",
+      date: new Date().toISOString().split('T')[0],
+      status: "En attente" as const,
+      total: getTotalAmount(),
+      items: cartItems
+    };
+
+    // Prepare email content
+    const emailBody = `
+Nouvelle commande reçue!
+
+Numéro de commande: ${newOrder.orderNumber}
+Date: ${newOrder.date}
+
+Client:
+- Nom: ${data.name}
+- Téléphone: ${data.phone}
+- Adresse: ${data.address}
+
+Articles commandés:
+${cartItems.map(item => `- ${item.name} x${item.quantity} - ${item.price * item.quantity} TND`).join('\n')}
+
+Total: ${getTotalAmount()} TND
+    `.trim();
+
+    try {
+      // Send email using mailto (this will open the user's email client)
+      // For a production app, you'd want to use a backend API endpoint
+      const mailtoLink = `mailto:sml.shop.2024@gmail.com?subject=Nouvelle commande ${newOrder.orderNumber}&body=${encodeURIComponent(emailBody)}`;
+
+      // For now, we'll just log the order and save it locally
+      console.log('Order details:', newOrder);
+      console.log('Email would be sent to: sml.shop.2024@gmail.com');
+
+      addOrder(newOrder);
+      clearCart();
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      showToast("Commande passée avec succès", "", "Merci pour votre achat!");
+
+      // Redirect to dashboard orders to verify
+      router.push("/dashboard/orders");
+    } catch (error) {
+      console.error('Error processing order:', error);
+      showToast("Erreur", "", "Une erreur est survenue lors de la commande");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              {...register("firstName")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.firstName && (
-              <span className="text-red-500">{errors.firstName.message}</span>
-            )}
-          </div>
-          <div>
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              {...register("lastName")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.lastName && (
-              <span className="text-red-500">{errors.lastName.message}</span>
-            )}
-          </div>
-        </div>
         <div>
-          <Label htmlFor="address">Address</Label>
+          <Label htmlFor="name">Nom complet</Label>
+          <Input
+            id="name"
+            placeholder="Votre nom"
+            {...register("name")}
+            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
+          />
+          {errors.name && (
+            <span className="text-red-500">{errors.name.message}</span>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="phone">Téléphone</Label>
+          <Input
+            type="tel"
+            id="phone"
+            placeholder="22334455"
+            {...register("phone")}
+            className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
+          />
+          {errors.phone && (
+            <span className="text-red-500">{errors.phone.message}</span>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="address">Adresse</Label>
           <Input
             id="address"
+            placeholder="rue de tunis, Tunis"
             {...register("address")}
             className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
           />
@@ -74,57 +141,12 @@ const CheckoutForm: React.FC = () => {
             <span className="text-red-500">{errors.address.message}</span>
           )}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              type="tel"
-              id="phone"
-              {...register("phone")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.phone && (
-              <span className="text-red-500">{errors.phone.message}</span>
-            )}
-          </div>
-          <div>
-            <Label htmlFor="city">City</Label>
-            <Input
-              id="city"
-              {...register("city")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.city && (
-              <span className="text-red-500">{errors.city.message}</span>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="zip">ZIP Code</Label>
-            <Input
-              id="zip"
-              {...register("zip")}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-6 focus:outline-none"
-            />
-            {errors.zip && (
-              <span className="text-red-500">{errors.zip.message}</span>
-            )}
-          </div>
-          <div>
-            <Label htmlFor="country">Country</Label>
-            <Input
-              id="country"
-              {...register("country")}
-              className="w-full p-6 border border-gray-300 dark:border-gray-700 rounded-lg  focus:outline-none"
-            />
-            {errors.country && (
-              <span className="text-red-500">{errors.country.message}</span>
-            )}
-          </div>
-        </div>
+
         <div className="flex items-center justify-end">
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={isLoading} className="gap-2">
+            {isLoading && <Loader2 className="animate-spin" size={18} />}
+            {isLoading ? "Traitement..." : "Commander"}
+          </Button>
         </div>
       </form>
     </div>

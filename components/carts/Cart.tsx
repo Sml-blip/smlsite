@@ -29,7 +29,7 @@ const Cart = () => {
 
   const handleRovomeItemFromCart = (item: CartItem) => {
     removeFromCart(item.id);
-    showToast("Item Removed from Cart", item?.images[0] as string, item.name);
+    showToast("Article retiré du panier", item?.images[0] as string, item.name);
   };
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const Cart = () => {
         </SheetTrigger>
         <SheetContent className="w-[90%] overflow-y-auto md:overflow-y-hidden">
           <SheetHeader>
-            <SheetTitle>Shopping Cart</SheetTitle>
+            <SheetTitle>Panier</SheetTitle>
             <Separator />
             <SheetDescription className="flex items-start justify-between gap-4 flex-col h-[90vh]">
               <div className="overflow-y-auto">
@@ -85,7 +85,7 @@ const Cart = () => {
 
                       <div className="flex items-center justify-between">
                         <p className="text-lg border border-green-500 px-2 rounded-md text-green-500">
-                          ${item.price}
+                          {formatPrice(item.price)}
                         </p>
                         <p className="text-lg">Qty : {item.quantity}</p>
                         <Button
@@ -106,10 +106,10 @@ const Cart = () => {
               <div className="w-full">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-xl text-center font-semibold">
-                    Your Subtotal :
+                    Sous-total :
                   </h3>
                   <p className="text-xl text-center font-bold text-green-500">
-                    $ {formatPrice(getTotalPrice())}
+                    {formatPrice(getTotalPrice())}
                   </p>
                 </div>
 

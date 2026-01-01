@@ -20,7 +20,7 @@ const BreadcrumbComponent = ({
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href={"/"}>Home</BreadcrumbLink>
+          <BreadcrumbLink href={"/"}>Accueil</BreadcrumbLink>
         </BreadcrumbItem>
         {links.map((link) => (
           <div key={link} className="flex items-center gap-2">

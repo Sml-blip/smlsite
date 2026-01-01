@@ -25,11 +25,11 @@ const ShopPageContainer = ({
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.page) || 1
   );
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
   // Function to filter data based on search params
   const filterData = () => {
-    let filteredProducts = productsData;
+    let filteredProducts: Product[] = productsData as unknown as Product[];
 
     // Filter by category
     if (searchParams.category) {
@@ -48,7 +48,7 @@ const ShopPageContainer = ({
     // Filter by color
     if (searchParams.color) {
       filteredProducts = filteredProducts.filter((product) =>
-        product?.color.includes(searchParams.color)
+        product?.color?.includes(searchParams.color)
       );
     }
 
@@ -91,11 +91,13 @@ const ShopPageContainer = ({
     setLoading(false);
   }, [filteredData, currentPage]);
 
+
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen w-full flex-col gap-3">
         <Loader2 className="animate-spin text-xl" size={50} />
-        <p>Loading products..</p>
+        <p>Chargement des produits..</p>
       </div>
     );
   }
@@ -110,13 +112,13 @@ const ShopPageContainer = ({
           itemPerPage={itemsPerPage}
           currentPage={currentPage}
         />
-        <p>Sorry no result found with your filter selection</p>
+        <p>Désolé, aucun résultat trouvé avec votre sélection de filtres</p>
       </div>
     );
   }
 
   return (
-    <div className="md:ml-4 p-2 md:p-0">
+    <div className="p-2 md:p-0 w-full">
       {/* product status and filter options */}
       <ProductViewChange
         listView={listView}
@@ -128,7 +130,7 @@ const ShopPageContainer = ({
 
       {/* showing product list or cart view based on state */}
       {listView === true && (
-        <div className="max-w-screen-xl mx-auto overflow-hidden py-4 md:py-8 gap-4 lg:gap-6">
+        <div className="w-full overflow-hidden py-4 md:py-8 gap-4 lg:gap-6">
           {paginatedData.map((product) => (
             <SingleProductListView key={product.id} product={product} />
           ))}
@@ -137,9 +139,8 @@ const ShopPageContainer = ({
 
       {listView === false && (
         <div
-          className={`max-w-screen-xl mx-auto overflow-hidden py-4 md:py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${
-            gridColumn || 3
-          } overflow-hidden  gap-4 lg:gap-6`}
+          className={`w-full overflow-hidden py-4 md:py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridColumn || 3
+            } overflow-hidden  gap-4 lg:gap-6`}
         >
           {paginatedData.map((product) => (
             <SingleProductCartView key={product.id} product={product} />

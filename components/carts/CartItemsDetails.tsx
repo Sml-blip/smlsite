@@ -19,19 +19,19 @@ const CartItemsDetails = () => {
   } = useCartStore();
 
 
-  
+
   useEffect(() => {
     setIsMounted(true)
-  },[])
+  }, [])
 
 
-  if(!isMounted){
+  if (!isMounted) {
     return null
   }
 
-  if(cartItems?.length === 0){
-   return <div className="text-xl text-center p-2 lg:col-span-2">
-      Sorry, No Item Found In The Cart
+  if (cartItems?.length === 0) {
+    return <div className="text-xl text-center p-2 lg:col-span-2">
+      Désolé, votre panier est vide
     </div>
   }
 
@@ -44,7 +44,7 @@ const CartItemsDetails = () => {
         >
           <div className="flex items-center space-x-4">
             <Image
-              src={ item?.images && item?.images [0]}
+              src={item?.images && item?.images[0]}
               alt="Product"
               height={64}
               width={64}
@@ -55,7 +55,7 @@ const CartItemsDetails = () => {
             </Link>
           </div>
           <p className="border rounded-md border-green-400 py-1 px-2  text-xl text-green-500">
-            ${formatPrice(item?.price)}
+            {formatPrice(item?.price)}
           </p>
 
           <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ const CartItemsDetails = () => {
         </div>
       ))}
       {cartItems?.length >= 1 && (
-        <Button variant={'outline'} className="my-2" onClick={clearCart}>Clear Cart</Button>
+        <Button variant={'outline'} className="my-2" onClick={clearCart}>Vider le panier</Button>
       )}
     </div>
   );

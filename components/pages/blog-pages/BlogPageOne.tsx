@@ -30,7 +30,7 @@ const BlogPageOne = () => {
                 {blog.title}
               </h2>
               <div className="text-sm md:text-lg font-medium flex items-center gap-2 text-blue-500">
-                <span className="hidden md:block">Written By</span>
+                <span className="hidden md:block">Écrit par</span>
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>Pic</AvatarFallback>
@@ -39,7 +39,7 @@ const BlogPageOne = () => {
               </div>
             </div>
             <p>{blog.excerpt}</p>
-            <Link href={`/blog/${blog.title}`} className="text-gray-900 dark:text-gray-100 underline text-muted-foreground my-2">Read More</Link>
+            <Link href={`/blog/${blog.title}`} className="text-gray-900 dark:text-gray-100 underline text-muted-foreground my-2">Lire la suite</Link>
           </div>
         ))}
       </div>

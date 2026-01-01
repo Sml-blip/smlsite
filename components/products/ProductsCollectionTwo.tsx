@@ -13,13 +13,13 @@ const ProductsCollectionTwo = () => {
       <Tabs defaultValue="new-arrivals" className="w-full space-y-8 mx-0">
         <TabsList className="font-semibold bg-transparent w-full text-center">
           <TabsTrigger value="new-arrivals" className="md:text-xl">
-            New Arrivals
+            Nouvelles arrivées
           </TabsTrigger>
           <TabsTrigger value="best-sellers" className="md:text-xl">
-            Best Sellers
+            Meilleures ventes
           </TabsTrigger>
           <TabsTrigger value="feauted" className="md:text-xl">
-            Featured
+            En vedette
           </TabsTrigger>
         </TabsList>
         <TabsContent value="new-arrivals" className="w-full">

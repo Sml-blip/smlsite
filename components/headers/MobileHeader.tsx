@@ -32,25 +32,25 @@ const MobileHeader = () => {
   const userLinks = [
     {
       link: "/my-account",
-      label: "My Account",
+      label: "Mon compte",
       icon: <User />,
       isActive: pathname.includes("/my-account"),
     },
     {
       link: "/wishlist",
-      label: "Wishlist",
+      label: "Favoris",
       icon: <Heart />,
       isActive: pathname.includes("/wishlist"),
     },
     {
       link: "/my-orders",
-      label: "My Orders",
+      label: "Mes commandes",
       icon: <ListOrdered />,
       isActive: pathname.includes("/my-orders"),
     },
     {
       link: "/help",
-      label: "Help",
+      label: "Aide",
       icon: <HelpCircle />,
       isActive: pathname.includes("/help"),
     },
@@ -59,19 +59,19 @@ const MobileHeader = () => {
   const navlinks = [
     {
       link: "/",
-      label: "Home",
+      label: "Accueil",
       icon: <Home />,
       isActive: pathname === "/",
     },
     {
       link: "/shop",
-      label: "Shop",
+      label: "Boutique",
       icon: <Store />,
       isActive: pathname.includes("/shop"),
     },
     {
       link: "/blog",
-      label: "Blogs",
+      label: "Blog",
       icon: <Text />,
       isActive: pathname.includes("/blog"),
     },
