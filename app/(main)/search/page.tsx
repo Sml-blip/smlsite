@@ -18,26 +18,26 @@ const SearchComponent = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const searchProducts = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .ilike('name', `%${searchParams.query}%`);
+
+        if (error) throw error;
+        setFoundProducts(data || []);
+      } catch (error) {
+        console.error('Error searching products:', error);
+        setFoundProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     searchProducts();
   }, [searchParams.query]);
-
-  const searchProducts = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .ilike('name', `%${searchParams.query}%`);
-
-      if (error) throw error;
-      setFoundProducts(data || []);
-    } catch (error) {
-      console.error('Error searching products:', error);
-      setFoundProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <Loader />;

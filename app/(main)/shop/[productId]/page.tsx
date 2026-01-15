@@ -21,39 +21,39 @@ const ProductIdPage = ({ params }: ProductIdPageProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProductData();
-  }, [params.productId]);
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
 
-  const fetchProductData = async () => {
-    try {
-      setLoading(true);
-
-      const { data: productData, error: productError } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', params.productId)
-        .maybeSingle();
-
-      if (productError) throw productError;
-      setProduct(productData);
-
-      if (productData) {
-        const { data: related, error: relatedError } = await supabase
+        const { data: productData, error: productError } = await supabase
           .from('products')
           .select('*')
-          .eq('category', productData.category)
-          .neq('id', params.productId)
-          .limit(4);
+          .eq('id', params.productId)
+          .maybeSingle();
 
-        if (relatedError) throw relatedError;
-        setRelatedProducts(related || []);
+        if (productError) throw productError;
+        setProduct(productData);
+
+        if (productData) {
+          const { data: related, error: relatedError } = await supabase
+            .from('products')
+            .select('*')
+            .eq('category', productData.category)
+            .neq('id', params.productId)
+            .limit(4);
+
+          if (relatedError) throw relatedError;
+          setRelatedProducts(related || []);
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching product:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchProductData();
+  }, [params.productId]);
 
   if (loading) {
     return <Loader />;

@@ -17,26 +17,26 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', params.productId)
+          .maybeSingle();
+
+        if (error) throw error;
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProduct();
-  }, [params?.productId]);
-
-  const fetchProduct = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', params.productId)
-        .maybeSingle();
-
-      if (error) throw error;
-      setProduct(data);
-    } catch (error) {
-      console.error('Error fetching product:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [params.productId]);
 
   if (loading) {
     return <Loader />;
