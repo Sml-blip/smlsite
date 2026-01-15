@@ -32,14 +32,14 @@ const ProductDetails = ({ product }: { product: Product }) => {
       {/* Rating and Review */}
       <RatingReview
         rating={product?.rating || 0}
-        review={product?.reviews.length || 0}
+        review={product?.reviews?.length || 0}
       />
       {/* Product Description */}
       <ProductDescription description={product?.description as string} />
 
       {/* product stock */}
       <div>
-        {product.stockItems === 0 ? (
+        {(product.stock || product.stockItems) === 0 ? (
           <p className="text-lg  w-fit rounded-md text-muted-foreground">Rupture de stock</p>
         ) : (
           <p className="text-lg w-fit rounded-md text-muted-foreground">

@@ -7,7 +7,7 @@ import { Label } from "../ui/label";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { colors } from "@/data/products/productColor";
-import { productsData } from "@/data/products/productsData";
+import { supabase } from "@/lib/supabase";
 import { Product } from "@/types";
 
 const FilterProducts = () => {
@@ -17,6 +17,7 @@ const FilterProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [products, setProducts] = useState<Array<{category: string, brand?: string}>>([]);
 
   // Access search params
   const searchParams = useSearchParams();
@@ -29,12 +30,30 @@ const FilterProducts = () => {
   const initialColor = searchParams.get("color");
   const initialBrand = searchParams.get("brand");
 
-  // Dynamically extract unique categories and brands from productsData
+  // Fetch products from Supabase
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('category, brand');
+
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  // Dynamically extract unique categories and brands from products
   const { uniqueCategories, uniqueBrands } = useMemo(() => {
     const categoriesSet = new Set<string>();
     const brandsSet = new Set<string>();
 
-    productsData.forEach((product: Product) => {
+    products.forEach((product) => {
       if (product.category) categoriesSet.add(product.category);
       if (product.brand) brandsSet.add(product.brand);
     });
@@ -43,7 +62,7 @@ const FilterProducts = () => {
       uniqueCategories: Array.from(categoriesSet),
       uniqueBrands: Array.from(brandsSet),
     };
-  }, []);
+  }, [products]);
 
   // Update state with initial values
   useEffect(() => {

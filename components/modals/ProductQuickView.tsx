@@ -69,14 +69,14 @@ const ProductQuickViewModal = () => {
                   {/* Rating and Review */}
                   <RatingReview
                     rating={product.rating || 0}
-                    review={product.reviews.length || 0}
+                    review={product.reviews?.length || 0}
                   />
                   {/* Product Description */}
                   <ProductDescription description={product.description} />
 
                   {/* product stock */}
                   <div className="">
-                    {product.stockItems === 0 ? (
+                    {(product.stock || product.stockItems) === 0 ? (
                       <p className="text-lg w-fit rounded-md">
                         out of stock
                       </p>

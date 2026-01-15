@@ -1,20 +1,47 @@
+"use client";
+
 import BreadcrumbComponent from "@/components/others/Breadcrumb";
 import SingleProductCartView from "@/components/product/SingleProductCartView";
 import SingleProductListView from "@/components/product/SingleProductListView";
-import { productsData } from "@/data/products/productsData";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Product } from "@/types";
+import Loader from "@/components/others/Loader";
 
 const SearchComponent = ({
   searchParams,
 }: {
   searchParams: { query: string };
 }) => {
+  const [foundProducts, setFoundProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Filter the products based on the search query
-  const foundProducts = productsData.filter((product) =>
-    product.name.toLowerCase().includes(searchParams.query.toLowerCase())
-  );
+  useEffect(() => {
+    searchProducts();
+  }, [searchParams.query]);
 
+  const searchProducts = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .ilike('name', `%${searchParams.query}%`);
+
+      if (error) throw error;
+      setFoundProducts(data || []);
+    } catch (error) {
+      console.error('Error searching products:', error);
+      setFoundProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   if (foundProducts.length === 0) {
     return <div className="text-xl font-medium flex flex-col items-center justify-center h-screen w-full">

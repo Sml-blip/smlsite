@@ -5,8 +5,8 @@ import { create } from 'zustand';
 interface WishlistState {
   wishlistItems: Product[];
   addToWishlist: (newItem: Product) => void;
-  removeFromWishlist: (itemId: number) => void;
-  isInWishlist: (itemId: number) => boolean;
+  removeFromWishlist: (itemId: string | number) => void;
+  isInWishlist: (itemId: string | number) => boolean;
 }
 
 const useWishlistStore = create<WishlistState>((set, get) => {
@@ -30,18 +30,18 @@ const useWishlistStore = create<WishlistState>((set, get) => {
         localStorage.setItem('wishlist-items', JSON.stringify(get().wishlistItems));
       }
     },
-    removeFromWishlist: (itemId: number) => {
+    removeFromWishlist: (itemId: string | number) => {
       set((state) => ({
-        wishlistItems: state.wishlistItems.filter((item) => item.id !== itemId),
+        wishlistItems: state.wishlistItems.filter((item) => item.id != itemId),
       }));
       if (isLocalStorageAvailable) {
         localStorage.setItem('wishlist-items', JSON.stringify(get().wishlistItems));
       }
     },
-    isInWishlist: (itemId: number) => {
+    isInWishlist: (itemId: string | number) => {
       // Access state through the get function
       const { wishlistItems } = get();
-      return wishlistItems.some((item) => item.id === itemId);
+      return wishlistItems.some((item) => item.id == itemId);
     },
   };
 });

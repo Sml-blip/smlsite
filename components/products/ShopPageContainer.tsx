@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import ProductViewChange from "../product/ProductViewChange";
-import { productsData } from "@/data/products/productsData";
+import { supabase } from "@/lib/supabase";
 import Pagination from "../others/Pagination";
 import SingleProductListView from "@/components/product/SingleProductListView";
 import { Product, SearchParams } from "@/types";
@@ -20,6 +20,7 @@ const ShopPageContainer = ({
 }: ShopPageContainerProps) => {
   const [loading, setLoading] = useState(true);
   const [listView, setListView] = useState(false);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [filteredData, setFilteredData] = useState<Product[]>([]);
   const [paginatedData, setPaginatedData] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(
@@ -27,9 +28,32 @@ const ShopPageContainer = ({
   );
   const itemsPerPage = 12;
 
+  // Fetch products from Supabase
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const { data: products, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setAllProducts(products || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setAllProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to filter data based on search params
   const filterData = () => {
-    let filteredProducts: Product[] = productsData as unknown as Product[];
+    let filteredProducts: Product[] = allProducts;
 
     // Filter by category
     if (searchParams.category) {
@@ -66,15 +90,17 @@ const ShopPageContainer = ({
     return filteredProducts;
   };
 
-  // Update filtered data whenever search params change
+  // Update filtered data whenever search params or products change
   useEffect(() => {
-    setLoading(true);
-    const filteredProducts = filterData();
-    setFilteredData(filteredProducts!);
-    setCurrentPage(1); // Reset pagination to first page when filters change
-    setLoading(false);
+    if (allProducts.length > 0) {
+      setLoading(true);
+      const filteredProducts = filterData();
+      setFilteredData(filteredProducts!);
+      setCurrentPage(1);
+      setLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [searchParams, allProducts]);
 
   // change currentPage when searchparams page change
   useEffect(() => {

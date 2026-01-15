@@ -77,7 +77,7 @@ const SingleProductCartView = ({ product }: { product: Product }) => {
           {name.slice(0, 45)}
           {name.length > 45 && "..."}
         </h3>
-        <RatingReview rating={rating} review={reviews.length} />
+        <RatingReview rating={rating} review={reviews?.length || 0} />
         <div className="text-lg font-bold space-x-3 mt-auto">
           {discount > 0 && (
             <span className="line-through text-muted-foreground">{price} TND</span>

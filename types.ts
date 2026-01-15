@@ -1,19 +1,24 @@
 // change or modify the types as your requirement
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   description: string;
-  aboutItem: string[];
+  aboutItem?: string[];
   price: number;
   discount: number;
   rating: number;
-  reviews: Review[];
+  reviews?: Review[];
   brand?: string;
   color?: string[];
-  stockItems: number;
+  colors?: string[];
+  stock: number;
+  stockItems?: number;
   images: string[];
+  featured?: boolean;
+  created_at?: string;
+  updated_at?: string;
 };
 
 export type Review = {

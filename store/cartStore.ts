@@ -6,8 +6,8 @@ interface CartState {
   cartItems: CartItem[];
   couponCode: string | null;
   addToCart: (newItem: CartItem) => void;
-  removeFromCart: (itemId: number) => void;
-  updateQuantity: (itemId: number, newQuantity: number) => void;
+  removeFromCart: (itemId: string | number) => void;
+  updateQuantity: (itemId: string | number, newQuantity: number) => void;
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
@@ -36,11 +36,11 @@ const useCartStore = create<CartState>((set) => {
     
     addToCart: (newItem: CartItem): void => {
       set((state) => {
-        const existingItem = state.cartItems.find((item) => item.id === newItem.id);
+        const existingItem = state.cartItems.find((item) => item.id == newItem.id);
         return {
           cartItems: existingItem
             ? state.cartItems.map((item) =>
-                item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
+                item.id == newItem.id ? { ...item, quantity: item.quantity + 1 } : item
               )
             : [...state.cartItems, { ...newItem}],
         };
@@ -48,17 +48,17 @@ const useCartStore = create<CartState>((set) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(useCartStore.getState().cartItems));
     },
 
-    removeFromCart: (itemId: number): void => {
+    removeFromCart: (itemId: string | number): void => {
       set((state) => ({
-        cartItems: state.cartItems.filter((item) => item.id !== itemId),
+        cartItems: state.cartItems.filter((item) => item.id != itemId),
       }));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(useCartStore.getState().cartItems));
     },
 
-    updateQuantity: (itemId: number, newQuantity: number): void => {
+    updateQuantity: (itemId: string | number, newQuantity: number): void => {
       set((state) => ({
         cartItems: state.cartItems.map((item) =>
-          item.id === itemId ? { ...item, quantity: newQuantity } : item
+          item.id == itemId ? { ...item, quantity: newQuantity } : item
         ),
       }));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(useCartStore.getState().cartItems));

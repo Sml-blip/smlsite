@@ -1,22 +1,49 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { productsData } from "@/data/products/productsData";
+import { supabase } from "@/lib/supabase";
 
 import React, { useEffect, useState } from "react";
 import SingleProductCartView from "../product/SingleProductCartView";
 
 const ProductsCollectionOne = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setIsMounted(true);
+    fetchProducts();
   }, []);
 
-  //get products data from server here based on the category or tab value
-  const data = productsData;
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const { data: products, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(8);
+
+      if (error) throw error;
+      setData(products || []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!isMounted) {
     return null;
+  }
+
+  if (loading) {
+    return (
+      <section className="max-w-screen-xl mx-auto py-16 px-4 md:px-8 w-full">
+        <div className="text-center">Loading products...</div>
+      </section>
+    );
   }
 
   return (
