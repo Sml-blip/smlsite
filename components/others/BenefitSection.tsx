@@ -23,7 +23,7 @@ const BenefitsSection = ({ textCenter }: { textCenter: boolean }) => {
               Livraison gratuite
             </h3>
             <p className="text-gray-700 dark:text-gray-300 text-center">
-              Profitez de la livraison gratuite sur toutes les commandes avec un minimum d'achat.
+              Profitez de la livraison gratuite sur toutes les commandes avec un minimum d&apos;achat.
             </p>
           </div>
           <div className="flex flex-col items-center space-y-4 bg-white dark:bg-gray-700 rounded-lg p-6 shadow-md">

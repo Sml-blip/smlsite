@@ -19,27 +19,27 @@ const AboutPageOne = () => {
         {/* add text about yourself */}
         <div className="text-lg">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            Bienvenue dans notre paradis de l'électronique ! Nous sommes passionnés par
+            Bienvenue dans notre paradis de l&apos;électronique ! Nous sommes passionnés par
             la fourniture des derniers et meilleurs gadgets aux passionnés de technologie
-            du monde entier. Notre mission est d'offrir des produits de haute qualité à
-            des prix abordables, accompagnés d'un service client exceptionnel.
+            du monde entier. Notre mission est d&apos;offrir des produits de haute qualité à
+            des prix abordables, accompagnés d&apos;un service client exceptionnel.
           </p>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            Avec des années d'expérience dans l'industrie, nous avons sélectionné une collection
+            Avec des années d&apos;expérience dans l&apos;industrie, nous avons sélectionné une collection
             de produits qui répond aux exigences des modes de vie modernes. Que
             vous recherchiez des smartphones de pointe, des ordinateurs portables puissants ou
-            des appareils domestiques intelligents innovants, nous avons ce qu'il vous faut.
+            des appareils domestiques intelligents innovants, nous avons ce qu&apos;il vous faut.
           </p>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            Nous croyons en l'innovation, la fiabilité et la satisfaction du client.
+            Nous croyons en l&apos;innovation, la fiabilité et la satisfaction du client.
             Nous mettons constamment à jour notre inventaire pour rester à la pointe
             et vous apporter les dernières tendances technologiques. Notre équipe dévouée
-            travaille sans relâche pour garantir que votre expérience d'achat soit fluide
+            travaille sans relâche pour garantir que votre expérience d&apos;achat soit fluide
             du début à la fin.
           </p>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
             Merci de nous avoir choisis comme votre destination privilégiée pour tout ce qui concerne
-            l'électronique. Rejoignez-nous dans cette aventure passionnante alors que nous continuons à
+            l&apos;électronique. Rejoignez-nous dans cette aventure passionnante alors que nous continuons à
             redéfinir la façon dont vous achetez la technologie.
           </p>
         </div>

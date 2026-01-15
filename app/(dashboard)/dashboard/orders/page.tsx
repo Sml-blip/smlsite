@@ -1,3 +1,5 @@
+"use client";
+
 import OrderActions from "@/components/dashboard/order/OrderActions";
 import OrderSearch from "@/components/dashboard/order/OrderSearch";
 import Loader from "@/components/others/Loader";
