@@ -42,7 +42,15 @@ const ShopPageContainer = ({
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setAllProducts(products || []);
+
+      const transformedProducts = (products || []).map(product => ({
+        ...product,
+        images: product.images || [product.image],
+        stockItems: product.stock || 0,
+        color: product.colors || []
+      }));
+
+      setAllProducts(transformedProducts);
     } catch (error) {
       console.error('Error fetching products:', error);
       setAllProducts([]);

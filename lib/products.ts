@@ -23,6 +23,7 @@ export async function getProducts(): Promise<Product[]> {
     rating: product.rating || 5,
     discount: product.discount || 0,
     stock: product.stock || 0,
+    stockItems: product.stock || 0,
     color: product.colors || [],
     aboutItem: [],
     reviews: []
@@ -52,6 +53,7 @@ export async function getProductById(id: string): Promise<Product | null> {
     rating: data.rating || 5,
     discount: data.discount || 0,
     stock: data.stock || 0,
+    stockItems: data.stock || 0,
     color: data.colors || [],
     aboutItem: [],
     reviews: []
@@ -81,6 +83,7 @@ export async function getProductsByCategory(category: string): Promise<Product[]
     rating: product.rating || 5,
     discount: product.discount || 0,
     stock: product.stock || 0,
+    stockItems: product.stock || 0,
     color: product.colors || [],
     aboutItem: [],
     reviews: []

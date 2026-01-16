@@ -25,7 +25,15 @@ const ProductsCollectionOne = () => {
         .limit(8);
 
       if (error) throw error;
-      setData(products || []);
+
+      const transformedProducts = (products || []).map(product => ({
+        ...product,
+        images: product.images || [product.image],
+        stockItems: product.stock || 0,
+        color: product.colors || []
+      }));
+
+      setData(transformedProducts);
     } catch (error) {
       console.error('Error fetching products:', error);
       setData([]);

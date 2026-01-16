@@ -32,9 +32,16 @@ const ProductIdPage = ({ params }: ProductIdPageProps) => {
           .maybeSingle();
 
         if (productError) throw productError;
-        setProduct(productData);
 
         if (productData) {
+          const transformedProduct = {
+            ...productData,
+            images: productData.images || [productData.image],
+            stockItems: productData.stock || 0,
+            color: productData.colors || []
+          };
+          setProduct(transformedProduct);
+
           const { data: related, error: relatedError } = await supabase
             .from('products')
             .select('*')
@@ -43,7 +50,15 @@ const ProductIdPage = ({ params }: ProductIdPageProps) => {
             .limit(4);
 
           if (relatedError) throw relatedError;
-          setRelatedProducts(related || []);
+
+          const transformedRelated = (related || []).map(product => ({
+            ...product,
+            images: product.images || [product.image],
+            stockItems: product.stock || 0,
+            color: product.colors || []
+          }));
+
+          setRelatedProducts(transformedRelated);
         }
       } catch (error) {
         console.error('Error fetching product:', error);

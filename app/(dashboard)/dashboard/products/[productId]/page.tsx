@@ -27,7 +27,16 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
           .maybeSingle();
 
         if (error) throw error;
-        setProduct(data);
+
+        if (data) {
+          const transformedProduct = {
+            ...data,
+            images: data.images || [data.image],
+            stockItems: data.stock || 0,
+            color: data.colors || []
+          };
+          setProduct(transformedProduct);
+        }
       } catch (error) {
         console.error('Error fetching product:', error);
       } finally {

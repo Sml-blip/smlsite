@@ -27,7 +27,15 @@ const SearchComponent = ({
           .ilike('name', `%${searchParams.query}%`);
 
         if (error) throw error;
-        setFoundProducts(data || []);
+
+        const transformedProducts = (data || []).map(product => ({
+          ...product,
+          images: product.images || [product.image],
+          stockItems: product.stock || 0,
+          color: product.colors || []
+        }));
+
+        setFoundProducts(transformedProducts);
       } catch (error) {
         console.error('Error searching products:', error);
         setFoundProducts([]);
