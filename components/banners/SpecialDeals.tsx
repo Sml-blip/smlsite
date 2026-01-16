@@ -1,12 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Countdown from "react-countdown";
 import Link from "next/link";
-import { productsData } from "@/data/products/productsData";
 import { cn } from "@/lib/utils";
+import { getProducts } from "@/lib/products";
+import { Product } from "@/types";
 
 const SpecialDeals = ({ textCenter }: { textCenter: boolean }) => {
+  const [deals, setDeals] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProducts().then((products) => {
+      setDeals(products.slice(0, 4));
+    });
+  }, []);
+
+  if (deals.length === 0) return null;
+
   return (
     <section className="py-16 bg-slate-200 dark:bg-slate-800">
       <div className="max-w-screen-xl mx-auto px-4 lg:px-8">
@@ -19,7 +30,7 @@ const SpecialDeals = ({ textCenter }: { textCenter: boolean }) => {
           Special Deals
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {productsData.slice(0, 4).map((deal) => (
+          {deals.map((deal) => (
             <div
               key={deal.id}
               className="bg-white dark:bg-slate-700 shadow-md rounded-lg overflow-hidden flex flex-col lg:flex-row items-center p-6 lg:p-4 gap-6"

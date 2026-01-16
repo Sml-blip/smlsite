@@ -1,12 +1,26 @@
+"use client";
 import ProductActions from "@/components/dashboard/product/ProductActions";
 import ProductHeader from "@/components/dashboard/product/ProductHeader";
 import Loader from "@/components/others/Loader";
 import Pagination from "@/components/others/Pagination";
-import { productsData } from "@/data/products/productsData";
 import Image from "next/image";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { getProducts } from "@/lib/products";
+import { Product } from "@/types";
 
 const ProductsPage = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts().then((data) => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
     <div className="max-w-screen-xl mx-auto w-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 my-4">
       <ProductHeader />
@@ -32,7 +46,7 @@ const ProductsPage = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {productsData.slice(0, 6).map((product) => (
+            {products.slice(0, 6).map((product) => (
               <tr key={product.id} className="bg-white dark:bg-gray-800">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Image

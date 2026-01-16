@@ -1,27 +1,22 @@
 "use client";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { productsData } from "@/data/products/productsData";
 import Link from "next/link";
 import { Product } from "@/types";
+import { getCategories } from "@/lib/products";
 
 const CategoriesCollection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [categories, setCategories] = useState<[string, Product[]][]>([]);
 
-  const categories = useMemo(() => {
-    const map = new Map<string, Product[]>();
-    productsData.forEach((product: any) => {
-      const cat = product.category;
-      if (!map.has(cat)) {
-        map.set(cat, []);
-      }
-      map.get(cat)?.push(product);
+  useEffect(() => {
+    getCategories().then((categoriesMap) => {
+      setCategories(Array.from(categoriesMap.entries()).slice(0, 3));
     });
-    return Array.from(map.entries()).slice(0, 3);
   }, []);
 
   const handleCollectionClick = (collectionName: string) => {
