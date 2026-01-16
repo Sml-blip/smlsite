@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import ModalProvider from "@/providers/ModalProvider";
-
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: "SML INFORMATIQUE",
@@ -24,10 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+      </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased hide-scrollbar",
-          fontSans.variable
+          "min-h-screen bg-background font-sans antialiased hide-scrollbar"
         )}
       >
         <ThemeProvider
